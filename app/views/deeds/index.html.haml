@@ -1,0 +1,25 @@
+- unless @live
+  = will_paginate(@deeds)
+
+
+%table#deeds
+  %tr
+    %th Date
+    %th Speaker
+    %th Text
+  %tr.deed
+    %td.performed_at
+    %td.speaker
+    %td.text 
+
+- unless @live
+  = will_paginate(@deeds)
+
+:javascript
+  var deeds = #{deeds_json};
+  var renderer = new DeedsRenderer('#deeds');
+  renderer.render(deeds);
+
+- if @live
+  :javascript
+    renderer.startPoll();

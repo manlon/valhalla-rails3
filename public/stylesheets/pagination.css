@@ -1,0 +1,103 @@
+div.pagination {
+  padding: 3px 3px 3px 0;
+  margin: 3px 3px 0 0;
+}
+ 
+div.pagination a {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #a5b6c7;
+  background: white;
+  text-decoration: none;
+  color: #003399;
+}
+div.pagination a:hover, div.pagination a:active {
+  border: 1px solid #000099;
+  color: #000;
+}
+div.pagination span.current {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #a5b6c7;
+ 
+  font-weight: bold;
+  background-color: #003399;
+  color: #FFF;
+}
+ 
+div.pagination span.disabled {
+  padding: 2px 5px 2px 5px;
+  margin: 2px 2px 2px 0;
+  border: 1px solid #ccc;
+  color: #bbb;
+}
+ 
+div#remote_pagination a {
+	cursor: pointer;
+}
+ 
+/*
+Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.8.0r4
+*/
+.yui-skin-sam .yui-pg-container{
+  display:block;
+  margin:6px 0;
+  white-space:nowrap;
+}
+.yui-skin-sam .yui-pg-first,.yui-skin-sam .yui-pg-previous,.yui-skin-sam .yui-pg-next,.yui-skin-sam .yui-pg-last,.yui-skin-sam .yui-pg-current,.yui-skin-sam .yui-pg-pages,.yui-skin-sam .yui-pg-page{
+  display:inline-block;
+  font-family:arial,helvetica,clean,sans-serif;
+  padding:3px 6px;
+  zoom:1;
+}
+.yui-skin-sam .yui-pg-pages{
+  padding:0;
+}
+.yui-skin-sam .yui-pg-current{
+  padding:3px 0;
+}
+.yui-skin-sam span.yui-pg-first,.yui-skin-sam span.yui-pg-previous,.yui-skin-sam span.yui-pg-next,.yui-skin-sam span.yui-pg-last{
+  color:#a6a6a6;
+}
+.yui-skin-sam .yui-pg-next,
+.yui-skin-sam .yui-pg-previous {
+  border: 1px solid #ccc;
+}
+ 
+.yui-skin-sam .yui-pg-first a,
+.yui-skin-sam .yui-pg-previous a {
+  border: 1px solid #a5b6c7;
+}
+ 
+.yui-skin-sam .yui-pg-page a{
+  text-decoration: none;
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #a5b6c7;
+  background: white
+  color: #FFF;
+}
+.yui-skin-sam .yui-pg-page:hover,
+.yui-skin-sam .yui-pg-page:active,{
+  border: 1px solid #000099;
+  color: #000;
+}
+.yui-skin-sam .yui-pg-current-page{
+  font-weight: bold;
+  background-color: #003399;
+  color: #FFF;
+}
+.yui-skin-sam .yui-pg-first,.yui-skin-sam .yui-pg-previous{
+  padding-left:2px;
+}
+.yui-skin-sam .yui-pg-next,.yui-skin-sam .yui-pg-last{
+  padding-right:2px;
+}
+.yui-skin-sam .yui-pg-current,.yui-skin-sam .yui-pg-rpp-options{
+  margin-left:1em;
+  margin-right:1em;
+}
+

@@ -1,0 +1,9 @@
+!!!
+%html
+  %head
+    %meta(name="csrf-param" content="")
+    %meta(name="csrf-token" content="")
+    =javascript_include_tag :defaults, 'pure', 'util', 'highlighter', 'deeds'
+    =stylesheet_link_tag 'blueprint/screen.css', 'valhalla.css', 'pagination.css'
+  %body
+    =yield
