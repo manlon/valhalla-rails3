@@ -27,7 +27,6 @@ class DeedsController < ApplicationController
   end
 
   def live
-    logger.debug "1111111111111111"
     redirect_to deeds_path(:page => live)
   end
 
