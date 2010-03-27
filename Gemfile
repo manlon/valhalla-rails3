@@ -25,3 +25,4 @@ gem "sqlite3-ruby", :require => "sqlite3"
 
 gem 'haml'
 gem 'will_paginate', '3.0.pre'
+gem 'daemons'
