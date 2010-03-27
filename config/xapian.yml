@@ -1,0 +1,8 @@
+development:
+  base_db_path: tmp/xapiandbs
+
+test:
+  base_db_path: tmp/xapiandbs
+
+production:
+  base_db_path: tmp/xapiandbs
