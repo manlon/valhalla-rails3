@@ -1,6 +1,7 @@
-%form{:method => "postback", :action => "deeds/show"}
+%form{:method => "postback"}
   %input{:type=>'text', :size=>40, :name=>'search', :id=>'Search'}
   %input{:type=>'submit', :value=>'Search'}
+
 
 - unless @live
   = will_paginate(@deeds)
@@ -16,14 +17,18 @@
     %td.speaker
     %td.text 
 
+
 - unless @live
   = will_paginate(@deeds)
+
 
 :javascript
   var deeds = #{deeds_json};
   var renderer = new DeedsRenderer('#deeds');
   renderer.render(deeds);
 
-- if @live
-  :javascript
-    renderer.startPoll();
+
+-#- if @live
+-#  :javascript
+-#    renderer.startPoll();
+

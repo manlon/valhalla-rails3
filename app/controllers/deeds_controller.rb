@@ -18,7 +18,22 @@ class DeedsController < ApplicationController
     end
     respond_with @deeds
   end
-
+  def show
+    if params[:search].blank?
+      redirect_to deeds_path()
+    else
+      per_page = 20
+      if params[:page] =~ /^-\d+/
+        offset = Integer(params[:page]) + 1
+        p = ActsAsXapian::Search.new(Deed,params[:search]).results.collect{|r| r[:model]}.paginate(:page => 1, :per_page => per_page)
+        @deeds = ActsAsXapian::Search.new(Deed,params[:search]).results.collect{|r| r[:model]}.paginate(:page => p.total_pages + offset, :per_page => per_page)
+      else
+        @deeds = ActsAsXapian::Search.new(Deed,params[:search], :limit => 5000).results.collect{|r| r[:model]}.paginate(:page => params[:page] || 1, :per_page => per_page)
+      end
+      #@deeds = ActsAsXapian::Search.new(Deed,params[:search], :limit => 1000).results.collect{|r| r[:model]}
+      respond_with @deeds
+    end
+  end
 
   def create
     @deed = Deed.new(deed_params)
