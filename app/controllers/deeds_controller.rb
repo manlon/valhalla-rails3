@@ -30,6 +30,22 @@ class DeedsController < ApplicationController
     respond_with @deeds
   end
 
+  def search
+    if params[:q].blank?
+      redirect_to deeds_path()
+    else
+      per_page = 20
+      # create an empty will-paginate collection first to have it do the
+      # pagination math 
+      @deeds = WillPaginate::Collection.new(params[:page] || 1, per_page)
+
+      # now do the search and stick the results in the will-paginate collection
+      search = ActsAsXapian::Search.new(Deed, params[:q], :offset => @deeds.offset, :limit => per_page)
+      @deeds.total_entries = search.matches_estimated
+      @deeds.replace(search.results.collect{|r| r[:model]})
+      render 'index'
+    end
+  end
 
   def create
     @deed = Deed.new(deed_params)
