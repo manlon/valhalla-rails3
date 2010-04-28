@@ -1,6 +1,6 @@
-%form{:method => "postback", :action => "deeds/show"}
-  %input{:type=>'text', :size=>40, :name=>'search', :id=>'Search'}
-  %input{:type=>'submit', :value=>'Search'}
+- form_tag(search_deeds_path, :method => :get) do
+  = text_field_tag 'q'
+  = submit_tag 'Search'
 
 - unless @live
   = will_paginate(@deeds)

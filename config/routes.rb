@@ -57,5 +57,9 @@ ValhallaRails3::Application.routes.draw do |map|
   # match ':controller(/:action(/:id(.:format)))'
 
   match 'deeds/live', :to => redirect('/deeds?page=live')
-  resources :deeds 
+  resources :deeds do
+    collection do
+      get :search
+    end
+  end
 end
