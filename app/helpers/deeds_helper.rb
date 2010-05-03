@@ -7,6 +7,6 @@ module DeedsHelper
         'text' => d.text,
         'performed_at' => d.performed_at.to_i
       }
-    end.to_json
+    end.to_json.gsub("</script>", "\\<\\/script\\>")
   end
 end
