@@ -45,35 +45,41 @@ function dateInTz(datestring){
 
 var epoch = function(secs){ return new Date(secs * 1000);};
 
-var linkify = function(text){
-  if(!text) return '';
+var linkify = (function(){
   var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
-  var match;
-  var parts = [];
-  var i = 0;
-  // for each match, push onto parts the text before the 
-  // match and the match itself. Even indices will have plain
-  // text and odd indices will contain links
-  while(match = urlRegex.exec(text)){
-    parts.push(text.slice(i, match.index));
-    parts.push(match[0]);
-    i = urlRegex.lastIndex;
-  }
-  // push the remaining text (will be an even index)
-  parts.push(text.slice(i));
-  
-  var s = "";
-  for(i=0; i<parts.length;i++){
-    if(i%2==0){
-      //even - plain
-      s += parts[i]
-    }else{
-      //odd - link
-      s += '<a href="' + parts[i] + '">' + parts[i] + "</a>"
+  var process = function(text){
+    var match;
+    var parts = [];
+    var i = 0;
+    // for each match, push onto parts the text before the 
+    // match and the match itself. Even indices will have plain
+    // text and odd indices will contain links
+    while(match = urlRegex.exec(text)){
+      parts.push(text.slice(i, match.index));
+      parts.push(match[0]);
+      i = urlRegex.lastIndex;
     }
+    // push the remaining text (will be an even index)
+    parts.push(text.slice(i));
+    var dummy = $('<p/>');
+    var s = '';
+    for(i=0; i<parts.length;i++){
+      if(i%2==0){
+        //even - plain
+        s += dummy.text(parts[i]).html();
+      }else{
+        //odd - link
+        s += dummy.html($('<a target=_blank href="' + parts[i] + '">' + parts[i] + "</a>")).html();
+      }
+    }
+    return s;
   }
-  return s;
-};
+  return function(){
+    $('tr.deed td.text').html(function(i, t){
+      return process(t);
+    });
+  };
+})();
 
 var highlight = (function(){
   var colors = {};
@@ -84,14 +90,13 @@ var highlight = (function(){
     colors = $.map(colors, function(i){return parseInt((i/4) + 192 ,10);});
     return 'rgb(' + colors.join(',') + ')';
   };
-  var hl = function(){
+  return function(){
     $('tr.deed').css('background', function(i){
       var s = $.trim($(this).find('.speaker').text());
       if(!colors[s]) colors[s] = genColor(hex_md5(s));
       return colors[s];
     });
   };
-  return hl;
 })();
 
 var SafePeriodic = function(timeout, onpoll, options){
