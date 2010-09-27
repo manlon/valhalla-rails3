@@ -30,9 +30,11 @@ var linkify = (function(){
     return s;
   }
   return function(){
-    $('tr.deed td.text').html(function(i, t){
+    var text_tds = $('tr.deed td.text').not('.linked');
+    text_tds.html(function(i, t){
       return process(t);
     });
+    text_tds.addClass('linked');
   };
 })();
 
@@ -41,9 +43,9 @@ var highlight = (function(){
   var genColor = function(seed){
    seed = seed || '';
     var md5 = hex_md5(seed);
-    var colors = $.map(md5.match(/[\da-f]{2}/ig).slice(0,3),function(i){return parseInt(i,16);});
-    colors = $.map(colors, function(i){return parseInt((i/4) + 192 ,10);});
-    return 'rgb(' + colors.join(',') + ')';
+    var rgb = $.map(md5.match(/[\da-f]{2}/ig).slice(0,3),function(i){return parseInt(i,16);});
+    rgb = $.map(rgb, function(i){return parseInt((i/4) + 192 ,10);});
+    return 'rgb(' + rgb.join(',') + ')';
   };
   return function(){
     $('tr.deed').css('background', function(i){
