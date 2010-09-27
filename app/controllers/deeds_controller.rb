@@ -1,22 +1,26 @@
 class DeedsController < ApplicationController
   respond_to :html, :json
 
+  PER_PAGE = 20
+
   def index
-    per_page = 20
     if params[:page] == 'live'
       @live = true
-      @deeds = Deed.order('id desc').limit(per_page)
+      @deeds = Deed.order('id desc').limit(PER_PAGE)
       @deeds = @deeds.reverse
       # if a nice client tells us we don't need anything, don't send anything
       if (params[:last])
         @deeds.reject!{|d| d.id <= params[:last].to_i}
       end
-    elsif params[:page] =~ /^-\d+/
+    elsif params[:page] =~ /^-\d+$/
       offset = Integer(params[:page]) + 1
-      p = Deed.paginate(:page => 1, :per_page => per_page)
-      @deeds = Deed.paginate(:page => p.total_pages + offset, :per_page => per_page)
+      p = Deed.paginate(:page => 1, :per_page => PER_PAGE)
+      @deeds = Deed.paginate(:page => p.total_pages + offset, :per_page => PER_PAGE)
+    elsif params[:context] =~ /^\d+$/
+      page = (Deed.count(:conditions => ['id < ?', params[:context]]) / PER_PAGE) + 1
+      @deeds = Deed.paginate(:page => page, :per_page => PER_PAGE)
     else
-      @deeds = Deed.paginate(:page => params[:page] || 1, :per_page => per_page)
+      @deeds = Deed.paginate(:page => params[:page] || 1, :per_page => PER_PAGE)
     end
     respond_with @deeds
   end
@@ -25,13 +29,13 @@ class DeedsController < ApplicationController
     if params[:q].blank?
       redirect_to deeds_path()
     else
-      per_page = 20
+      @search = true
       # create an empty will-paginate collection first to have it do the
       # pagination math 
-      @deeds = WillPaginate::Collection.new(params[:page] || 1, per_page)
+      @deeds = WillPaginate::Collection.new(params[:page] || 1, PER_PAGE)
 
       # now do the search and stick the results in the will-paginate collection
-      search = ActsAsXapian::Search.new(Deed, params[:q], :offset => @deeds.offset, :limit => per_page)
+      search = ActsAsXapian::Search.new(Deed, params[:q], :offset => @deeds.offset, :limit => PER_PAGE)
       @deeds.total_entries = search.matches_estimated
       @deeds.replace(search.results.collect{|r| r[:model]})
       render 'index'

@@ -1,9 +1,17 @@
+%style(type="text/css")
+  :sass
+    tr.new
+      background: lightyellow
+    a.contextlink
+      text-decoration: none
+      &:hover
+        text-decoration: underline
 %form(action=search_deeds_path method="get")
   = text_field_tag 'q'
   = submit_tag 'Search'
 
 - unless @live
-  = will_paginate(@deeds)
+  = will_paginate(@deeds, :params => {:context => nil})
 
 - jquery_template(:deed_t) do
   %tr.deed.new
@@ -11,20 +19,23 @@
     %td.speaker ${speaker}
     %td.text ${text}
     ${setid(id)}
+    - if @search
+      %td
+        <a class="contextlink" href="/deeds?context=${id}" >
+        ! &oplus;
+        </a>
 
 %table#deeds
   %tr
     %th Date
     %th Speaker
     %th Text
+    - if @search
+      %th
 
 - unless @live
-  = will_paginate(@deeds)
+  = will_paginate(@deeds, :params => {:context => nil})
 
-%style(type="text/css")
-  :sass
-    tr.new
-      background: lightyellow
 :javascript
   var max_id = 0;
   var setid = function(id){ max_id = id; return '';};
