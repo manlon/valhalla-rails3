@@ -68,9 +68,12 @@
   :javascript
     var poller = new SafePeriodic(5, function(ok){
       $.get('/deeds.json?page=live&last=' + max_id, function(data){
-        $('tr.deed:lt(' + data.length + ')').remove();
-        $('#deeds').append($.tmpl('deed_t', data));
-        setTimeout(highlight, 2000);
+        if(data.length > 0){
+          $('tr.deed:lt(' + data.length + ')').remove();
+          $('#deeds').append($.tmpl('deed_t', data));
+          linkify();
+          setTimeout(highlight, 2000);
+        }
         ok();
       });
     });
