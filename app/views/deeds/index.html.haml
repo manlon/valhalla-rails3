@@ -15,7 +15,9 @@
 
 - jquery_template(:deed_t) do
   %tr.deed.new
-    %td.performed_at ${epoch(performed_at).toLocaleString()}
+    %td.performed_at 
+      ${epoch(performed_at).toLocaleString()} 
+      %input.deed_id(type="hidden" style="display:none" value="${id}")
     %td.speaker ${speaker}
     %td.text ${text}
     ${setid(id)}
@@ -43,6 +45,23 @@
   $('#deeds').append($.tmpl('deed_t', deeds));
   highlight();
   linkify();
+
+- if @context
+  :javascript
+    var flash = function(n, el){
+      if(n <= 0) return;
+      $(el).fadeOut('slow', function(){
+        $(this).fadeIn('slow', function(){
+          flash(n-1, this);
+        });
+      });
+    };
+    $(function(){
+        flash(2, $('input.deed_id[value=#{@context}]').parents('tr'));
+      }
+    );
+
+
 
 
 - if @live

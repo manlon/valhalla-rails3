@@ -19,6 +19,7 @@ class DeedsController < ApplicationController
     elsif params[:context] =~ /^\d+$/
       page = (Deed.count(:conditions => ['id < ?', params[:context]]) / PER_PAGE) + 1
       @deeds = Deed.paginate(:page => page, :per_page => PER_PAGE)
+      @context = params[:context]
     else
       @deeds = Deed.paginate(:page => params[:page] || 1, :per_page => PER_PAGE)
     end
