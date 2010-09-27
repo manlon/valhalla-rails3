@@ -8,7 +8,9 @@ class DeedsController < ApplicationController
       @deeds = Deed.order('id desc').limit(per_page)
       @deeds = @deeds.reverse
       # if a nice client tells us we don't need anything, don't send anything
-      @deeds = [] if @deeds.last.id.to_s == params[:last]
+      if (params[:last])
+        @deeds.reject!{|d| d.id <= params[:last].to_i}
+      end
     elsif params[:page] =~ /^-\d+/
       offset = Integer(params[:page]) + 1
       p = Deed.paginate(:page => 1, :per_page => per_page)

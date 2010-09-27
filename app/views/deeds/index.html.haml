@@ -1,29 +1,45 @@
-- form_tag(search_deeds_path, :method => :get) do
+%form(action=search_deeds_path method="get")
   = text_field_tag 'q'
   = submit_tag 'Search'
 
 - unless @live
   = will_paginate(@deeds)
 
+- jquery_template(:deed_t) do
+  %tr.deed.new
+    %td.performed_at ${epoch(performed_at).toLocaleString()}
+    %td.speaker ${speaker}
+    %td.text ${text}
+    ${setid(id)}
 
 %table#deeds
   %tr
     %th Date
     %th Speaker
     %th Text
-  %tr.deed
-    %td.performed_at
-    %td.speaker
-    %td.text 
 
 - unless @live
   = will_paginate(@deeds)
 
+%style(type="text/css")
+  :sass
+    tr.new
+      background: lightyellow
 :javascript
+  var max_id = 0;
+  var setid = function(id){ max_id = id; return '';};
   var deeds = #{deeds_json};
-  var renderer = new DeedsRenderer('#deeds');
-  renderer.render(deeds);
+  $('#deeds').append($.tmpl('deed_t', deeds));
+  highlight();
+
 
 - if @live
   :javascript
-    renderer.startPoll();
+    var poller = new SafePeriodic(5, function(ok){
+      $.get('/deeds.json?page=live&last=' + max_id, function(data){
+        $('tr.deed:lt(' + data.length + ')').remove();
+        $('#deeds').append($.tmpl('deed_t', data));
+        setTimeout(highlight, 2000);
+        ok();
+      });
+    });

@@ -85,8 +85,7 @@ var highlight = (function(){
     return 'rgb(' + colors.join(',') + ')';
   };
   var hl = function(){
-    $('tr').css('background', function(i){
-      if(i==0)return;
+    $('tr.deed').css('background', function(i){
       var s = $.trim($(this).find('.speaker').text());
       if(!colors[s]) colors[s] = genColor(hex_md5(s));
       return colors[s];
