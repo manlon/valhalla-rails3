@@ -6,7 +6,7 @@ class DeedsController < ApplicationController
   HTTP_USERS = %w{ramberg manlon wustin dillbilly fish_fry}
   def check_privilege
     valid = authenticate_or_request_with_http_basic do |uname, password|
-      HTTP_USERS.include?(uname) && password = "#{uname}1"
+      HTTP_USERS.include?(uname) && password == "#{uname}1"
     end
     render :text => 'INVALID', :layout => false unless valid
   end
