@@ -5,6 +5,16 @@ require 'rails/all'
 # Auto-require default libraries and those for the current Rails environment.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+# attempt to require application specific settings for this machine
+begin
+  require 'config/local_application'
+rescue LoadError
+  puts "[NOTICE] No config/local_application overrides."
+  def check_privilege
+    true
+  end
+end
+
 module ValhallaRails3
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

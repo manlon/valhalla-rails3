@@ -1,6 +1,8 @@
 class DeedsController < ApplicationController
   respond_to :html, :json
 
+  before_filter :check_privilege
+
   PER_PAGE = 20
 
   def index
