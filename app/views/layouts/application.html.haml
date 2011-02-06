@@ -3,7 +3,7 @@
   %head
     %meta(name="csrf-param" content="")
     %meta(name="csrf-token" content="")
-    = javascript_include_tag 'jquery-1.5', 'jquery.tmpl', 'application'
-    =stylesheet_link_tag 'blueprint/screen.css', 'valhalla.css', 'pagination.css'
+    = include_stylesheets :workspace
+    = include_javascripts :workspace
   %body
     =yield

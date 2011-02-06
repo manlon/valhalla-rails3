@@ -1,0 +1,11 @@
+javascripts:
+  workspace:
+    - public/javascripts/jquery-1.5.js
+    - public/javascripts/jquery.tmpl.js
+    - public/javascripts/application.js
+
+stylesheets:
+  workspace:
+    - public/stylesheets/blueprint/screen.css
+    - public/stylesheets/valhalla.css
+    - public/stylesheets/pagination.css
