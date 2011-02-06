@@ -33,7 +33,10 @@ class DeedsController < ApplicationController
 
   def search
     if params[:q].blank?
-      redirect_to deeds_path()
+      respond_to do |format|
+        format.html { redirect_to deeds_path() }
+        format.json { render :json => '' }
+      end
     else
       @search = true
       # create an empty will-paginate collection first to have it do the
@@ -44,7 +47,10 @@ class DeedsController < ApplicationController
       search = ActsAsXapian::Search.new(Deed, params[:q], :offset => @deeds.offset, :limit => PER_PAGE)
       @deeds.total_entries = search.matches_estimated
       @deeds.replace(search.results.collect{|r| r[:model]})
-      render 'index'
+      respond_to do |format|
+        format.html { render 'index' }
+        format.json { render :json => @deeds }
+      end
     end
   end
 
