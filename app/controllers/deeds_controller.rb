@@ -25,7 +25,10 @@ class DeedsController < ApplicationController
     else
       @deeds = Deed.paginate(:page => params[:page] || 1, :per_page => PER_PAGE)
     end
-    respond_with @deeds
+    respond_to do |format|
+      format.html { render 'index' }
+      format.json { render :json => @deeds }
+    end
   end
 
   def search
@@ -46,7 +49,7 @@ class DeedsController < ApplicationController
   end
 
   def create
-    @deed = Deed.new(deed_params)
+    @deed = Deed.new(params[:deed])
     @deed.save
     respond_with @deed
   end
@@ -54,19 +57,5 @@ class DeedsController < ApplicationController
   def live
     redirect_to deeds_path(:page => live)
   end
-
-  def deed_params
-    if deed = params[:deed]
-      deed
-    elsif json = params[:_json]
-      if json.size == 1
-        json = json.first
-        if json['model'] == 'valhalla.deed' && fields = json['fields']
-          {:speaker => fields['speaker'], :performed_at => fields['deed_date'], :text => fields['text']}
-        end
-      end
-    end
-  end
-  private :deed_params
 
 end
