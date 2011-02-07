@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Speaker</th>
+    <th>Text</th>
+  </tr>
+<% _(deeds).each(function(item) { %>
+  <tr class="deed new">
+    <td class="performed_at">
+      <%= epoch(item.performed_at).toLocaleString() %>
+    </td>
+    <td class="speaker">
+        <%= item.escape("speaker") %>
+    </td>
+    <td class="text">
+        <%= item.escape("text") %>
+    </td>
+  </tr>
+<% }); %>
+</table>

@@ -6,4 +6,8 @@
     = include_stylesheets :workspace
     = include_javascripts :workspace
   %body
-    =yield
+    #app
+    :javascript
+      $(function() {
+        valhalla.init();
+      });

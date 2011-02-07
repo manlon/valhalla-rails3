@@ -1,3 +1,11 @@
+var valhalla = {
+  Views: {},
+  Controllers: {},
+  init: function() {
+      new valhalla.Controllers.Deeds();
+      Backbone.history.start();
+  }
+};
 var epoch = function(secs){ return new Date(secs * 1000);};
 
 var linkify = (function(){

@@ -26,7 +26,7 @@ class DeedsController < ApplicationController
       @deeds = Deed.paginate(:page => params[:page] || 1, :per_page => PER_PAGE)
     end
     respond_to do |format|
-      format.html { render 'index' }
+      format.html { render 'layouts/application' }
       format.json { render :json => @deeds }
     end
   end
@@ -48,7 +48,7 @@ class DeedsController < ApplicationController
       @deeds.total_entries = search.matches_estimated
       @deeds.replace(search.results.collect{|r| r[:model]})
       respond_to do |format|
-        format.html { render 'index' }
+        format.html { render 'layouts/application' }
         format.json { render :json => @deeds }
       end
     end

@@ -1,8 +1,13 @@
 javascripts:
   workspace:
     - public/javascripts/jquery-1.5.js
-    - public/javascripts/jquery.tmpl.js
+    - public/javascripts/underscore.js
+    - public/javascripts/backbone.js
     - public/javascripts/application.js
+    - public/javascripts/models/deed.js
+    - public/javascripts/controllers/deeds.js
+    - public/javascripts/views/deeds/index.js
+    - app/views/deeds/index.jst
 
 stylesheets:
   workspace:
