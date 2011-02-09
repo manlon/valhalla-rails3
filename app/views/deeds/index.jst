@@ -7,7 +7,7 @@
 <% _(deeds).each(function(item) { %>
   <tr class="deed new">
     <td class="performed_at">
-      <%= epoch(item.performed_at).toLocaleString() %>
+      <%= epoch(item.get('performed_at')).toLocaleString() %>
     </td>
     <td class="speaker">
         <%= item.escape("speaker") %>

@@ -27,7 +27,7 @@ class DeedsController < ApplicationController
     end
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => @deeds }
+      format.json { respond_with @deeds }
     end
   end
 
@@ -35,7 +35,7 @@ class DeedsController < ApplicationController
     if params[:q].blank?
       respond_to do |format|
         format.html { redirect_to deeds_path() }
-        format.json { render :json => '' }
+        format.json { respond_with @deeds }
       end
     else
       @search = true
@@ -49,7 +49,7 @@ class DeedsController < ApplicationController
       @deeds.replace(search.results.collect{|r| r[:model]})
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render :json => @deeds }
+        format.json { respond_with @deeds }
       end
     end
   end
