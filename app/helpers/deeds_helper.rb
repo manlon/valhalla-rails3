@@ -1,7 +1,7 @@
 module DeedsHelper
   def deeds_json
-    resource = {:total => @deeds_resource.total_entries}
-    resource[:deeds] = @deeds_resource.collect do |d|
+    resource = {:total => @deeds.total_entries}
+    resource[:deeds] = @deeds.collect do |d|
       {
         'id' => d.id,
         'speaker' => d.speaker,

@@ -6,45 +6,42 @@ class DeedsController < ApplicationController
   PER_PAGE = 20
 
   def index
-    @deeds_resource = WillPaginate::Collection.new(params[:page] || 1, PER_PAGE)
 
     if params[:page] =~ /^-\d+$/
       offset = Integer(params[:page]) + 1
       p = Deed.paginate(:page => 1, :per_page => PER_PAGE)
-      deeds = Deed.paginate(:page => p.total_pages + offset, :per_page => PER_PAGE)
+      @deeds = Deed.paginate(:page => p.total_pages + offset, :per_page => PER_PAGE)
     elsif params[:context] =~ /^\d+$/
       page = (Deed.count(:conditions => ['id < ?', params[:context]]) / PER_PAGE) + 1
-      deeds = Deed.paginate(:page => page, :per_page => PER_PAGE)
+      @deeds = Deed.paginate(:page => page, :per_page => PER_PAGE)
       @context = params[:context]
     else
-      deeds = Deed.paginate(:page => params[:page] || 1, :per_page => PER_PAGE)
+      @deeds = Deed.paginate(:page => params[:page] || 1, :per_page => PER_PAGE)
     end
-    @deeds_resource.replace(deeds)
-    @deeds_resource.total_entries = Deed.count
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { respond_with @deeds_resource }
+      format.json { }
     end
   end
 
   def search
-    @deeds_resource = WillPaginate::Collection.new(params[:page] || 1, PER_PAGE)
+    @deeds = WillPaginate::Collection.new(params[:page] || 1, PER_PAGE)
     if params[:q].blank?
       respond_to do |format|
         format.html { redirect_to deeds_path() }
-        format.json { respond_with @deeds_resource }
+        format.json { respond_with @deeds }
       end
     else
       @search = true
       # create an empty will-paginate collection  
 
       # now do the search and stick the results in the will-paginate collection
-      search = ActsAsXapian::Search.new(Deed, params[:q], :offset => @deeds_resource.offset, :limit => PER_PAGE)
-      @deeds_resource.replace(search.results.select{|r| !r[:model].nil?}.collect{|r| r[:model]})
-      @deeds_resource.total_entries = search.matches_estimated
+      search = ActsAsXapian::Search.new(Deed, params[:q], :offset => @deeds.offset, :limit => PER_PAGE)
+      @deeds.replace(search.results.select{|r| !r[:model].nil?}.collect{|r| r[:model]})
+      @deeds.total_entries = search.matches_estimated
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { respond_with @deeds_resource }
+        format.json { respond_with @deeds}
       end
     end
   end
