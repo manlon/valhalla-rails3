@@ -1,8 +1,8 @@
 var valhalla = {
   Views: {},
   Controllers: {},
-  init: function() {
-      new valhalla.Controllers.Deeds();
+  init: function(data) {
+      new valhalla.Controllers.Deeds({data: data});
       Backbone.history.start();
   }
 };
