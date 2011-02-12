@@ -5,15 +5,17 @@ valhalla.Controllers.Deeds = Backbone.Controller.extend({
   },
   
   index: function(query) { 
-    $.getJSON('/deeds' + query, this.index_handler);
+    var deeds = new DeedCollection();
+    deeds.fetch({success: function(coll, resp){
+      new valhalla.Views.Index({ collection: deeds, payload: resp });
+    }});
   },
   search: function(query) {
    $.getJSON('/deeds/search' + query, this.index_handler);
   },
   index_handler: function(data) {
-    if(data) {
-      var deeds = new DeedCollection(data.deeds);
-      new valhalla.Views.Index({ collection: deeds, total: data.total });
+   if(data) {
+      new valhalla.Views.Index({ collection: deeds, payload: data });
     } else {
       new Error({ message: "Error loading deeds." });
     }
