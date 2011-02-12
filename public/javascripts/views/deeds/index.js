@@ -4,6 +4,8 @@ valhalla.Views.Index = Backbone.View.extend({
     this.render();
     $("form").submit(function() {return false;});
     $("#q").focus();
+    highlight();
+    linkify();
   },
 
   events: {
