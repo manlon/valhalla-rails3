@@ -2,6 +2,12 @@ valhalla.Views.Index = Backbone.View.extend({
   initialize: function() {
     this.deeds = this.options.deeds;
     this.render();
+    $("form").submit(function() {return false;});
+    $("#q").focus();
+  },
+
+  events: {
+    "click #search": "search"
   },
   
   render: function() {
@@ -12,5 +18,10 @@ valhalla.Views.Index = Backbone.View.extend({
     }
     $(this.el).html(out);
     $('#app').html(this.el);
+  },
+
+  search: function() {
+    q = $("[name=q]").val();
+    window.location = '/deeds#search?q=' + q
   }
 });

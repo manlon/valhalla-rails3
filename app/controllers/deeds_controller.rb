@@ -46,7 +46,7 @@ class DeedsController < ApplicationController
       # now do the search and stick the results in the will-paginate collection
       search = ActsAsXapian::Search.new(Deed, params[:q], :offset => @deeds.offset, :limit => PER_PAGE)
       @deeds.total_entries = search.matches_estimated
-      @deeds.replace(search.results.collect{|r| r[:model]})
+      @deeds.replace(search.results.select{|r| !r[:model].nil?}.collect{|r| r[:model]})
       respond_to do |format|
         format.html { render 'layouts/application' }
         format.json { respond_with @deeds }

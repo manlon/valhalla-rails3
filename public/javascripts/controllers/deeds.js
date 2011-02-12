@@ -1,10 +1,4 @@
 valhalla.Controllers.Deeds = Backbone.Controller.extend({
-    /*
-  initialize: function(options) {
-    this.route(/^search(.*?)/, "search", this.index);
-    this.route(/(.*?)/, "index", this.search);
-  }
-  */
   routes: {
     "search*query": "search",
     "*query": "index",
