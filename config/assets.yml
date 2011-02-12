@@ -8,6 +8,7 @@ javascripts:
     - public/javascripts/controllers/deeds.js
     - public/javascripts/views/deeds/index.js
     - app/views/deeds/index.jst
+    - app/views/deeds/deed.jst
 
 stylesheets:
   workspace:

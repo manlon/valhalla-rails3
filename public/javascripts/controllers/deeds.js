@@ -12,8 +12,8 @@ valhalla.Controllers.Deeds = Backbone.Controller.extend({
   },
   index_handler: function(data) {
     if(data) {
-      var deeds = _(data.deeds).map(function(i) { return new Deed(i); });
-      new valhalla.Views.Index({ deeds: deeds, total: data.total });
+      var deeds = new DeedCollection(data.deeds);
+      new valhalla.Views.Index({ collection: deeds, total: data.total });
     } else {
       new Error({ message: "Error loading deeds." });
     }

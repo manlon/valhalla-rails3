@@ -1,6 +1,5 @@
 valhalla.Views.Index = Backbone.View.extend({
   initialize: function() {
-    this.deeds = this.options.deeds;
     this.render();
     $("form").submit(function() {return false;});
     $("#q").focus();
@@ -13,12 +12,16 @@ valhalla.Views.Index = Backbone.View.extend({
   },
   
   render: function() {
-    if(this.deeds.length > 0) {
-      var out = JST.index({deeds: this.deeds});
+    if(this.collection.length > 0) {
+      var out = JST.index({});
+      $(this.el).html(out);
+      var tbody = this.$('tbody');
+      this.collection.each(function(deed){
+        tbody.append(JST.deed({deed: deed}));
+      });
     } else {
-      out = "<h3>No deeds!</h3>";
+      $(this.el).html("<h3>No deeds!</h3>");
     }
-    $(this.el).html(out);
     $('#app').html(this.el);
   },
 
@@ -26,4 +29,6 @@ valhalla.Views.Index = Backbone.View.extend({
     q = $("[name=q]").val();
     window.location = '/deeds#search?q=' + q
   }
+});
+valhalla.Views.Deed = Backbone.View.extend({
 });
