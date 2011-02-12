@@ -17,12 +17,14 @@ valhalla.Views.Index = Backbone.View.extend({
       $(this.el).html(out);
       var tbody = this.$('tbody');
       this.collection.each(function(deed){
-        tbody.append(JST.deed({deed: deed}));
+        var view = new valhalla.Views.Deed({model: deed});
+        tbody.append($(view.render().el).html());
       });
     } else {
       $(this.el).html("<h3>No deeds!</h3>");
     }
     $('#app').html(this.el);
+    return this;
   },
 
   search: function() {
@@ -31,4 +33,8 @@ valhalla.Views.Index = Backbone.View.extend({
   }
 });
 valhalla.Views.Deed = Backbone.View.extend({
+  render: function(){
+    $(this.el).html(JST.deed({deed: this.model}));
+    return this;
+  }
 });
