@@ -41,7 +41,7 @@ class DeedsController < ApplicationController
       @deeds.total_entries = search.matches_estimated
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { respond_with @deeds}
+        format.json { }
       end
     end
   end
