@@ -1,0 +1,12 @@
+<tr class="deed new">
+  <td class="performed_at">
+    <%= epoch(deed.get('performed_at')).toLocaleString() %>
+  </td>
+  <td class="speaker">
+      <%= deed.escape("speaker") %>
+  </td>
+  <td class="text">
+      <%= deed.escape("text") %>
+  </td>
+</tr>
+
